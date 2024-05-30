@@ -25,7 +25,7 @@
             <TextBlock TextAlignment="center" Margin="0 5 0 0" FontSize="14">Twój osobisty menedżer finansów</TextBlock>
         </StackPanel>
         <Border Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 40 0 0"
-                BorderBrush="Gray" BorderThickness="1" CornerRadius="4" Width="auto">
+                BorderBrush="Gray" BorderThickness="1" CornerRadius="4" Width="auto" >
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0">
                 <TextBlock FontSize="24" FontWeight="light" TextAlignment="center">DOSTĘPNE ŚRODKI:</TextBlock>
                 <TextBlock x:Name="tbMoney" TextAlignment="center" FontSize="42">0$</TextBlock>
@@ -41,9 +41,7 @@
                             <Image Source="/delete.png" Width="20" />
                             <TextBlock>Usuń</TextBlock>
                         </StackPanel>
-                    </Button>   
-                    
-                    
+                    </Button>     
                 </StackPanel>
                 <TextBlock FontSize="24" FontWeight="light" TextAlignment="center">WYBIERZ STYL</TextBlock>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -52,5 +50,42 @@
                 </StackPanel>
             </StackPanel>
         </Border>
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Margin="0 30 0 0">
+            <TextBlock TextAlignment="center" FontWeight="Light" FontSize="24">LISTA TRANSAKCJI</TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <Border Margin="0 0 50 0" BorderBrush="Gray" BorderThickness="1" CornerRadius="4">
+                    <StackPanel>
+                        <TextBlock>Przychody: </TextBlock>
+                        <ListBox Name="TaskListBox" Margin="10">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox IsChecked="{Binding IsCompleted}" Margin="5"/>
+                                        <TextBlock Text="{Binding Description}" Margin="5"/>
+                                        <Button Content="Remove" Click="RemoveTask_Click" Margin="5"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+                <Border Margin="50 0 0 0" BorderBrush="Gray" BorderThickness="1" CornerRadius="4">
+                    <StackPanel>
+                        <TextBlock>Wydatki:</TextBlock>
+                        <ListBox Name="Expenses" Margin="10">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox IsChecked="{Binding IsCompleted}" Margin="5"/>
+                                        <TextBlock Text="{Binding Description}" Margin="5"/>
+                                        <Button Content="Remove" Click="RemoveTask_Click" Margin="5"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
