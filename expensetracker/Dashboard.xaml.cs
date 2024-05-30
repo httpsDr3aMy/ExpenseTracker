@@ -14,18 +14,22 @@ using System.Windows.Shapes;
 
 namespace expensetracker
 {
-    public partial class AddTransactions : Page
+    /// <summary>
+    /// Logika interakcji dla klasy Dashboard.xaml
+    /// </summary>
+    public partial class Dashboard : Page
     {
         private Frame _mainFrame;
-        public AddTransactions(Frame mainFrame)
+
+        public Dashboard(Frame mainFrame)
         {
             InitializeComponent();
             _mainFrame = mainFrame;
         }
 
-        private void btnCloseTransaction_Click(object sender, RoutedEventArgs e)
+        private void btnAddTransaction_Click(object sender, RoutedEventArgs e)
         {
-            _mainFrame.Navigate(new Dashboard(_mainFrame));
+            _mainFrame.Navigate(new AddTransactions(_mainFrame));
         }
     }
 }
