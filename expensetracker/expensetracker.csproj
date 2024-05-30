@@ -8,10 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="add.png" />
+    <None Remove="delete.png" />
     <None Remove="wallet.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="add.png" />
+    <Resource Include="delete.png" />
     <Resource Include="wallet.png" />
   </ItemGroup>
 
