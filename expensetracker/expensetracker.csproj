@@ -9,13 +9,25 @@
 
   <ItemGroup>
     <None Remove="add.png" />
+    <None Remove="cancel.png" />
     <None Remove="delete.png" />
+    <None Remove="entertainment.png" />
+    <None Remove="food.png" />
+    <None Remove="money.png" />
+    <None Remove="save.png" />
+    <None Remove="shopping.png" />
     <None Remove="wallet.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="add.png" />
+    <Resource Include="cancel.png" />
     <Resource Include="delete.png" />
+    <Resource Include="entertainment.png" />
+    <Resource Include="food.png" />
+    <Resource Include="money.png" />
+    <Resource Include="save.png" />
+    <Resource Include="shopping.png" />
     <Resource Include="wallet.png" />
   </ItemGroup>
 

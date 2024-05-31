@@ -1,31 +1,62 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace expensetracker
 {
     public partial class AddTransactions : Page
     {
         private Frame _mainFrame;
-        public AddTransactions(Frame mainFrame)
+        private Dashboard _dashboardPage;
+
+        public AddTransactions(Frame mainFrame, Dashboard dashboardPage)
         {
             InitializeComponent();
             _mainFrame = mainFrame;
+            _dashboardPage = dashboardPage;
         }
 
-        private void btnCloseTransaction_Click(object sender, RoutedEventArgs e)
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            _mainFrame.Navigate(new Dashboard(_mainFrame));
+            _mainFrame.Navigate(_dashboardPage);
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            string transactionName = tbName.Text;
+            string transactionAmount = tbAmount.Text;
+            string category = (cbCategory.SelectedItem as ComboBoxItem)?.Content?.ToString();
+
+            if (string.IsNullOrWhiteSpace(transactionName))
+            {
+                MessageBox.Show("Wprowadź nazwę transakcji.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (!double.TryParse(transactionAmount, out double amount))
+            {
+                MessageBox.Show("Wprowadź poprawną kwotę.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(category))
+            {
+                MessageBox.Show("Wybierz kategorię.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (category.StartsWith("[-]") && (!(transactionAmount.Contains("-"))))
+            {
+                MessageBox.Show("Nie dopisałeś minusa.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            Transaction transaction = new Transaction(transactionName, amount, category);
+
+
+            _dashboardPage.AddTransaction(transaction);
+
+            _mainFrame.Navigate(_dashboardPage);
         }
     }
 }

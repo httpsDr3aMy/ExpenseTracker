@@ -12,27 +12,118 @@
             </Rectangle.Fill>
         </Rectangle>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="DODAJ NOWĄ TRANSAKCJĘ" FontSize="20" FontWeight="Light" Foreground="White" Margin="0 10"/>
+            <TextBlock FontWeight="Light" Foreground="White" Margin="0 10" FontSize="32" TextAlignment="Center">DODAJ NOWĄ TRANSAKCJĘ</TextBlock>
             <StackPanel>
-                <TextBlock Foreground="White" TextAlignment="center">Nazwa: </TextBlock>
-                <TextBlock Foreground="White" FontStyle="Italic" FontSize="8" TextAlignment="Center">(podaj nazwę transakcji)</TextBlock>
-                <TextBox/>
+                <TextBlock Foreground="White" TextAlignment="center" FontSize="18">Nazwa: </TextBlock>
+                <TextBlock Foreground="White" FontStyle="Italic" FontSize="12" TextAlignment="Center">(podaj nazwę transakcji)</TextBlock>
+                <TextBox Padding="5" Margin="0 5 0 0" x:Name="tbName"/>
             </StackPanel>
-            <StackPanel Margin="0 5 0 0">
-                <TextBlock Foreground="White" TextAlignment="center">Nazwa:</TextBlock>
-                <TextBlock Foreground="White" FontStyle="Italic" FontSize="8" TextAlignment="Center">(podaj nazwę transakcji)</TextBlock>
-                <TextBox/>
+            <StackPanel Margin="0 10 0 0">
+                <TextBlock Foreground="White" TextAlignment="center" FontSize="18">Kwota:</TextBlock>
+                <TextBlock Foreground="White" FontStyle="Italic" FontSize="12" TextAlignment="Center">(podaj kwotę transakcji, jeśli dodajesz wydatek, postaw znak minusa na początku kwoty)</TextBlock>
+                <TextBox Padding="5" Margin="0 5 0 0" x:Name="tbAmount"/>
             </StackPanel>
-            <StackPanel Margin="0 5 0 0">
-                <TextBlock Foreground="White" TextAlignment="center">Nazwa:</TextBlock>
-                <TextBlock Foreground="White" FontStyle="Italic" FontSize="8" TextAlignment="Center">(podaj nazwę transakcji)</TextBlock>
-                <ComboBox>
-                    <ComboBoxItem>test</ComboBoxItem>
+            <StackPanel Margin="0 10 0 0">
+                <TextBlock Foreground="White" TextAlignment="center" FontSize="18">Wybierz kategorię:</TextBlock>
+                <TextBlock Foreground="White" FontStyle="Italic" FontSize="12" TextAlignment="Center">([+] oznacza przychód, [-] oznacza wydatek)</TextBlock>
+                <ComboBox Padding="10" Margin="0 5 0 0" x:Name="cbCategory">
+                    <ComboBoxItem>[+] Przychód</ComboBoxItem>
+                    <ComboBoxItem>[-] Zakupy</ComboBoxItem>
+                    <ComboBoxItem>[-] Jedzenie</ComboBoxItem>
+                    <ComboBoxItem>[-] Rozrywka</ComboBoxItem>
                 </ComboBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="btnCloseTransation" Click="btnCloseTransaction_Click">Add</Button>
-                <Button Click="btnCloseTransaction_Click">Cancel</Button>
+            <StackPanel Orientation="Horizontal" Margin="20" HorizontalAlignment="center">
+                <Button x:Name="btnSave" Foreground="White" BorderThickness="0" Click="btnSave_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="border" BorderThickness="2" BorderBrush="White" CornerRadius="8" Padding="30 10" Background="Transparent">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation
+                                                    Storyboard.TargetName="border"
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    To="LightGray"
+                                                    Duration="0:0:0.2"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation
+                                                    Storyboard.TargetName="border"
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    To="Transparent"
+                                                    Duration="0:0:0.2"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.ExitActions>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image Source="/save.png" Width="20"/>
+                        <TextBlock Margin="5 0 0 0" FontSize="13.5">Zapisz</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnCancel" Foreground="White" BorderThickness="0" Margin="20 0 0 0" Click="btnCancel_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="border" BorderThickness="2" BorderBrush="White" CornerRadius="8" Padding="30 10" Background="Transparent">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Trigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <ColorAnimation
+                                                    Storyboard.TargetName="border"
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    To="LightGray"
+                                                    Duration="0:0:0.2"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.EnterActions>
+                                                <Trigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <ColorAnimation
+                                                    Storyboard.TargetName="border"
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    To="Transparent"
+                                                    Duration="0:0:0.2"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.ExitActions>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image Source="/cancel.png" Width="20"/>
+                        <TextBlock Margin="5 0 0 0" FontSize="13.5">Anuluj</TextBlock>
+                    </StackPanel>
+                </Button>
             </StackPanel>
         </StackPanel>
     </Grid>
