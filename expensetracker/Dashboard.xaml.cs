@@ -8,20 +8,39 @@ namespace expensetracker
 {
     public partial class Dashboard : Page
     {
-        private ObservableCollection<Transaction> allTransactions;
         private ObservableCollection<Transaction> incomeTransactions;
         private ObservableCollection<Transaction> expenseTransactions;
         private Frame _mainFrame;
+        private ResourceDictionary lightMode;
+        private ResourceDictionary darkMode;
 
         public Dashboard(Frame mainFrame)
         {
             InitializeComponent();
             _mainFrame = mainFrame;
-            allTransactions = new ObservableCollection<Transaction>();
             incomeTransactions = new ObservableCollection<Transaction>();
             expenseTransactions = new ObservableCollection<Transaction>();
             lbIncomeTransactions.ItemsSource = incomeTransactions;
             lbExpenseTransactions.ItemsSource = expenseTransactions;
+            lightMode = new ResourceDictionary() { Source = new Uri("LightMode.xaml", UriKind.Relative) };
+            darkMode = new ResourceDictionary() { Source = new Uri("DarkMode.xaml", UriKind.Relative) };
+            SetTheme(lightMode);
+        }
+
+        private void DarkModeRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is RadioButton radioButton && radioButton.IsChecked == true && Application.Current.Resources.MergedDictionaries.Count > 0)
+            {
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri("DarkModeResource.xaml", UriKind.RelativeOrAbsolute);
+            }
+        }
+
+        private void LightModeRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is RadioButton radioButton && radioButton.IsChecked == true && Application.Current.Resources.MergedDictionaries.Count > 0)
+            {
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri("LightModeResource.xaml", UriKind.RelativeOrAbsolute);
+            }
         }
 
 
@@ -30,7 +49,6 @@ namespace expensetracker
             string iconPath = GetIconPath(transaction.Category);
             transaction.Icon = new BitmapImage(new Uri(iconPath, UriKind.Relative));
 
-            allTransactions.Add(transaction);
             UpdateTransactionsLists(transaction);
         }
 
@@ -56,7 +74,6 @@ namespace expensetracker
             }
         }
 
-
         private void UpdateTransactionsLists(Transaction transaction)
         {
             double currentMoney = Convert.ToDouble(tbMoney.Text);
@@ -71,6 +88,7 @@ namespace expensetracker
             }
             tbMoney.Text = updatedMoney.ToString();
         }
+
         private void btnAddTransaction_Click(object sender, RoutedEventArgs e)
         {
             _mainFrame.Navigate(new AddTransactions(_mainFrame, this));
@@ -81,6 +99,58 @@ namespace expensetracker
             incomeTransactions.Clear();
             expenseTransactions.Clear();
             tbMoney.Text = "0";
+        }
+
+        private void RemoveIncome_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            if (button != null)
+            {
+                Transaction transaction = button.DataContext as Transaction;
+                if (transaction != null)
+                {
+                    incomeTransactions.Remove(transaction);
+
+                    double currentMoney = Convert.ToDouble(tbMoney.Text);
+                    double updatedMoney = currentMoney - transaction.Amount;
+                    tbMoney.Text = updatedMoney.ToString();
+                }
+            }
+        }
+
+        private void RemoveExpense_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            if (button != null)
+            {
+                Transaction transaction = button.DataContext as Transaction;
+                if (transaction != null)
+                {
+                    expenseTransactions.Remove(transaction);
+
+                    double currentMoney = Convert.ToDouble(tbMoney.Text);
+                    double updatedMoney = currentMoney - transaction.Amount;
+                    tbMoney.Text = updatedMoney.ToString();
+                }
+            }
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if ((sender as RadioButton).Content.ToString() == "Ciemny")
+            {
+                SetTheme(darkMode);
+            }
+            else
+            {
+                SetTheme(lightMode);
+            }
+        }
+
+        private void SetTheme(ResourceDictionary theme)
+        {
+            Application.Current.Resources.MergedDictionaries.Clear();
+            Application.Current.Resources.MergedDictionaries.Add(theme);
         }
     }
 
