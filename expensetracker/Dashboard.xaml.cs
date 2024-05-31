@@ -11,8 +11,6 @@ namespace expensetracker
         private ObservableCollection<Transaction> incomeTransactions;
         private ObservableCollection<Transaction> expenseTransactions;
         private Frame _mainFrame;
-        private ResourceDictionary lightMode;
-        private ResourceDictionary darkMode;
 
         public Dashboard(Frame mainFrame)
         {
@@ -22,27 +20,7 @@ namespace expensetracker
             expenseTransactions = new ObservableCollection<Transaction>();
             lbIncomeTransactions.ItemsSource = incomeTransactions;
             lbExpenseTransactions.ItemsSource = expenseTransactions;
-            lightMode = new ResourceDictionary() { Source = new Uri("LightMode.xaml", UriKind.Relative) };
-            darkMode = new ResourceDictionary() { Source = new Uri("DarkMode.xaml", UriKind.Relative) };
-            SetTheme(lightMode);
         }
-
-        private void DarkModeRadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            if (sender is RadioButton radioButton && radioButton.IsChecked == true && Application.Current.Resources.MergedDictionaries.Count > 0)
-            {
-                Application.Current.Resources.MergedDictionaries[0].Source = new Uri("DarkModeResource.xaml", UriKind.RelativeOrAbsolute);
-            }
-        }
-
-        private void LightModeRadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            if (sender is RadioButton radioButton && radioButton.IsChecked == true && Application.Current.Resources.MergedDictionaries.Count > 0)
-            {
-                Application.Current.Resources.MergedDictionaries[0].Source = new Uri("LightModeResource.xaml", UriKind.RelativeOrAbsolute);
-            }
-        }
-
 
         public void AddTransaction(Transaction transaction)
         {
@@ -133,24 +111,6 @@ namespace expensetracker
                     tbMoney.Text = updatedMoney.ToString();
                 }
             }
-        }
-
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            if ((sender as RadioButton).Content.ToString() == "Ciemny")
-            {
-                SetTheme(darkMode);
-            }
-            else
-            {
-                SetTheme(lightMode);
-            }
-        }
-
-        private void SetTheme(ResourceDictionary theme)
-        {
-            Application.Current.Resources.MergedDictionaries.Clear();
-            Application.Current.Resources.MergedDictionaries.Add(theme);
         }
     }
 
